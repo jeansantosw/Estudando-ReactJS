@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css';
+import ImgBackground  from './assets/background.png';
 import Header from './components/Header';
 
 function App() {
@@ -14,6 +15,8 @@ function App() {
     return(
         <>
         <Header  title="Projects"/>
+
+        <img width={ 400 } src={ ImgBackground }/>
         <ul>
             {projects.map(project=> <li key={project}>{project}</li>)}
         </ul>
