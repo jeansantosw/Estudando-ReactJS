@@ -1,24 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import api from './services/api';
 import './App.css';
-import ImgBackground  from './assets/background.png';
+//import ImgBackground  from './assets/background.png';
 import Header from './components/Header';
 
 function App() {
-    const [ projects, setProjects ] = useState(['Reactjs', 'NodeJS']);
+    const [ projects, setProjects ] = useState([]);
 
-    function handleAddProject(){
+    useEffect(()=>{
+        api.get('projects').then(response =>{
+            setProjects(response.data);
+        });
+    }, []);
 
+    async function handleAddProject(){
         //projects.push(`React Native ${Date.now()}`);
-        setProjects([...projects, `React Native ${Date.now()}`]);
+        //setProjects([...projects, `React Native ${Date.now()}`])
+
+        const response = await api.post('projects', {
+            title: `React Native ${Date.now()}`,
+            owner: "Jean Santos de S."
+        } );
+
+        const project = response.data;
+
+        setProjects([...projects, project]);
     }
 
     return(
         <>
         <Header  title="Projects"/>
-
-        <img width={ 400 } src={ ImgBackground }/>
         <ul>
-            {projects.map(project=> <li key={project}>{project}</li>)}
+            {projects.map(project=> <li key={project.id}>{project.title}</li>)}
         </ul>
 
         <button type="button" onClick={handleAddProject}>Adicionar Projeto</button>
