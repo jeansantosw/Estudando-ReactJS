@@ -19,7 +19,7 @@ function App() {
 
         const response = await api.post('projects', {
             title: `React Native ${Date.now()}`,
-            owner: "Jean Santos de S."
+            owner: "Jean S. de S."
         } );
 
         const project = response.data;
